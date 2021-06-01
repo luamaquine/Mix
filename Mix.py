@@ -1,11 +1,39 @@
 import pygame
 import time
-import random
-import menu
+import random 
 from pygame.locals import *
-
+import os
 
 def main():
+    # ball
+    ball = pygame.image.load("assets/ball.png")
+    ball_x = 640
+    ball_y = 360
+    sideimpulse = True
+
+    vel1 = 6
+    vel2 = 8
+    vel3 = 10
+
+    ball_dx = -vel1
+    ball_dy = -vel1
+
+     # ball movement
+    ball_x = ball_x + ball_dx
+    ball_y = ball_y + ball_dy
+
+    # ball collision with upper wall
+    if ball_y <= 40:
+        ball_dy *= -1
+
+    # ball collision with left wall
+    if ball_x <= 0:
+        ball_dx *= -1
+    
+    # ball collision with right wall
+    if ball_x >= 720:
+        ball_dx *= -1
+
     snake_speed = 8
 
     # Window size
@@ -24,12 +52,8 @@ def main():
 
     run_game = True
 
-    # Main Function
-    while menu.start_menu():
-        menu.start_menu()
-
     # Initialize game window
-    pygame.display.set_caption('Snake')
+    pygame.display.set_caption('Mix')
     game_window = pygame.display.set_mode((window_x, window_y))
 
     # FPS (frames per second) controller
@@ -58,7 +82,7 @@ def main():
     # initial score
     score = 0
 
-    background = pygame.image.load('assets/menu/snake.png')
+    background = pygame.transform.scale (pygame.image.load(os.path.join('assets/Background/background-black.png')), (window_x, window_y))
 
 
     # displaying Score function
@@ -107,7 +131,7 @@ def main():
                 main()
 
 
-    cherry = "assets/cherry/cherry0.png"
+    cherry = "assets/cherry/cherry5.png"
     pineapple = "assets/pineapple/pineapplesprite.png"
     orange = "assets/orange/orangesprite.png"
     fruitlist = [cherry, pineapple, orange]
