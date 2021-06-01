@@ -2,6 +2,7 @@ import pygame
 import random
 from pygame.locals import *
 from pygame.time import delay
+import Mix
 
 # Helper functions
 def on_grid_random():
@@ -12,7 +13,6 @@ def on_grid_random():
 def collision(c1, c2):
     return (c1[0] == c2[0]) and (c1[1] == c2[1])
 
-
 # Macro definition for snake movement.
 UP = 0
 RIGHT = 1
@@ -20,6 +20,10 @@ DOWN = 2
 LEFT = 3
 
 pygame.init()
+
+while Mix.start_menu:
+    menu.start_menu()
+    
 screen = pygame.display.set_mode((600, 600))
 pygame.display.set_caption('MIX')
 
@@ -29,13 +33,17 @@ ball = [(400, 500)]
 ballpos = pygame.Surface((10, 10))
 ballpos.fill((255, 255, 255))
 
-ball2 = [(100, 300)]
+ball2 = [(250, 100)]
 ballpos2 = pygame.Surface((10, 10))
 ballpos2.fill((255, 255, 255))
 
-ball3 = [(100, 300)]
+ball3 = [(300, 100)]
 ballpos3 = pygame.Surface((10, 10))
 ballpos3.fill((255, 255, 255))
+
+ball4 = [(100, 200)]
+ballpos4 = pygame.Surface((10, 10))
+ballpos4.fill((255, 255, 255))
 
 snake = [(200, 200), (210, 200), (220, 200)]
 snake_skin = pygame.Surface((10, 10))
@@ -148,6 +156,7 @@ while not game_over:
         min3_pos = on_grid_random()
         game_over = True
         break
+    
 
         
     # Check if snake collided with boundaries
@@ -187,6 +196,7 @@ while not game_over:
     screen.blit(mine, mine_pos)
     screen.blit(mine1, mine1_pos)
     screen.blit(mine2, mine2_pos)
+    screen.blit(mine3, mine3_pos)
 
     score_font = font.render('Score: %s' % (score), True, (255, 255, 255))
     score_rect = score_font.get_rect()
@@ -204,13 +214,16 @@ while not game_over:
         screen.blit(ballpos, pos)    
     if score > 4:
         level = 2
-        screen.blit(mine2, mine2_pos)
         for pos in ball2:
             screen.blit(ballpos2, pos)
     if score > 9:
         level = 3
         for pos in ball3:
             screen.blit(ballpos3, pos)
+    if score >19:
+        level = 4
+        for pos in ball4:
+            screen.blit(ballpos4, pos)
 
     # ball movement
     ball[0] = (ball[0][0] + 10, ball[0][1] - 10)
@@ -224,7 +237,7 @@ while not game_over:
 
     # Ball 2 collision with walls
     if ball2[0][0] == 590:
-        ball2[0] = (ball2[0][1] - 10, ball2[0][0] + 10) 
+        ball2[0] = (ball2[0][1] - 10, ball2[0][0] - 10) 
 
     # Ball 3
     ball3[0] = (ball3[0][1] + 10, ball3[0][0] - 10)
@@ -232,6 +245,13 @@ while not game_over:
     # Ball 3 collision with walls
     if ball3[0][0] == 590:
         ball3[0] = (ball3[0][1] - 10, ball3[0][0] + 10)
+
+    # ball 4 movement
+    ball4[0] = (ball4[0][0] + 10, ball4[0][1] - 10)
+
+    # Ball 4 collision with walls
+    if ball4[0][0] == 590:
+        ball4[0] = (ball4[0][1] - 10, ball4[0][0] + 10)  
 
     # Ball collision with snake
     for i in range(len(snake)):
@@ -246,6 +266,11 @@ while not game_over:
 
     for i in range(len(snake)):
         if ball3[0][0] == snake[i][0] and ball3[0][1] == snake[i][1]:
+            game_over = True
+            break
+
+    for i in range(len(snake)):
+        if ball4[0][0] == snake[i][0] and ball4[0][1] == snake[i][1]:
             game_over = True
             break
 
