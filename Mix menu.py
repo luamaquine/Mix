@@ -1,70 +1,115 @@
 import pygame
+from pygame.locals import *
+import random
 import time
 
+WINDOW_SIZE = (600, 600)
+PIXEL_SIZE = 10
+
+
+def collision(pos1, pos2):
+    return pos1 == pos2
+
+
+def off_limits(pos):
+    if 0 <= pos[0] < WINDOW_SIZE[0] and 0 <= pos[1] < WINDOW_SIZE[1]:
+        return False
+    else:
+        return True
+
+
+def random_on_grid():
+    x = random.randint(0, WINDOW_SIZE[0])
+    y = random.randint(0, WINDOW_SIZE[1])
+    return x // PIXEL_SIZE * PIXEL_SIZE, y // PIXEL_SIZE * PIXEL_SIZE
+
+
 pygame.init()
+screen = pygame.display.set_mode(WINDOW_SIZE)
+pygame.display.set_caption('Mix')
+
+snake_pos = [(250, 50), (260, 50), (270, 50)]
+snake_surface = pygame.Surface((PIXEL_SIZE, PIXEL_SIZE))
+snake_surface.fill((255, 255, 255))
+snake_direction = K_LEFT
+
+apple_surface = pygame.Surface((PIXEL_SIZE, PIXEL_SIZE))
+apple_surface.fill((255, 0, 0))
+apple_pos = random_on_grid()
+
+ball_surface = pygame.Surface((PIXEL_SIZE, PIXEL_SIZE))
+ball_surface.fill((255, 255, 255))
+ball_surface = K_RIGHT
+
+def restart_game():
+    global snake_pos
+    global apple_pos
+    global snake_direction
+    snake_pos = [(250, 50), (260, 50), (270, 50)]
+    snake_direction = K_LEFT
+    apple_pos = random_on_grid()
 
 
-def start_menu():
-    menu = True
-    menu_x = 720
-    menu_y = 480
-    window = pygame.display.set_mode((menu_x, menu_y))
-    menubg = pygame.image.load('assets/menu/luis.coimbra_menu.png')
-    clock = pygame.time.Clock()
-    font = pygame.font.Font('assets/PressStart2P.ttf', 10)
+while True:
+    pygame.time.Clock().tick(15)
+    screen.fill((0, 0, 0))
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            quit()
+        elif event.type == KEYDOWN:
+            if event.key in [K_UP, K_DOWN, K_LEFT, K_RIGHT]:
+                snake_direction = event.key
 
+    screen.blit(apple_surface, apple_pos)
 
-    def credits():
-        creditswindow = pygame.display.set_mode((720, 480))
-        background = pygame.image.load('assets/menu/credits.png')
-        creditswindow.blit(background, (0, 0))
-        pygame.display.update()
-        time.sleep(10)
-        start_menu()
-        
+    if collision(apple_pos, snake_pos[0]):
+        snake_pos.append((-10, -10))
+        apple_pos = random_on_grid()
 
-    while menu:
+    for pos in snake_pos:
+        screen.blit(snake_surface, pos)
 
-        window.blit(menubg, (0, 0))
-        pygame.display.set_caption('Snake')
-        pygame.display.update()
-        clock.tick(60)
+    for i in range(len(snake_pos) - 1, 0, -1):
+        if collision(snake_pos[0], snake_pos[i]):
+            restart_game()
+            break
+        snake_pos[i] = snake_pos[i - 1]
 
+    if off_limits(snake_pos[0]):
+        restart_game()
+
+    # handling key events
         for event in pygame.event.get():
-            mouse = pygame.mouse.get_pos()
-            if event.type == pygame.QUIT:
-                quit()
+            if event.type == QUIT:
+                run_game = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    change_to = 'UP'
+                if event.key == pygame.K_DOWN:
+                    change_to = 'DOWN'
+                if event.key == pygame.K_LEFT:
+                    change_to = 'LEFT'
+                if event.key == pygame.K_RIGHT:
+                    change_to = 'RIGHT'
 
-            # Start button
-            if 290 + 130 >= mouse[0] >= 290 and 180 + 50 >= mouse[1] >= 180:
-                menubg = pygame.image.load('assets/menu/luis.coimbra_menustart.png')
-                window.blit(menubg, (0, 0))
-                pygame.display.update()
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    run_game = True
-                    menu = False
-                    return menu
+        # Condtions for pressing only one key at a time
+        if change_to == 'UP' and direction != 'DOWN':
+            direction = 'UP'
+        if change_to == 'DOWN' and direction != 'UP':
+            direction = 'DOWN'
+        if change_to == 'LEFT' and direction != 'RIGHT':
+            direction = 'LEFT'
+        if change_to == 'RIGHT' and direction != 'LEFT':
+            direction = 'RIGHT'
 
-            # Options button
-            if 290 + 130 >= mouse[0] >= 290 and 255 + 50 >= mouse[1] >= 255:
-                menubg = pygame.image.load('assets/menu/luis.coimbra_menuoptions.png')
-                window.blit(menubg, (0, 0))
-                pygame.display.update()
-
-            # Credits button
-            if 290 + 130 >= mouse[0] >= 290 and 325 + 50 >= mouse[1] >= 325:
-                menubg = pygame.image.load('assets/menu/luis.coimbra_menucredits.png')
-                window.blit(menubg, (0, 0))
-                pygame.display.update()
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    credits()
-                
-            # Quit button
-            if 290 + 130 >= mouse[0] >= 290 and 395 + 50 >= mouse[1] >= 395:
-                menubg = pygame.image.load('assets/menu/luis.coimbra_menuquit.png')
-                window.blit(menubg, (0, 0))
-                pygame.display.update()
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    quit()
-
-start_menu()        
+        # Snake's movement
+        if direction == 'UP':
+            snake_pos[1] -= 10
+        if direction == 'DOWN':
+            snake_pos[1] += 10
+        if direction == 'LEFT':
+            snake_pos[0] -= 10
+        if direction == 'RIGHT':
+            snake_pos[0] += 10
+    pygame.display.update()

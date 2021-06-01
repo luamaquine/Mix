@@ -5,34 +5,6 @@ from pygame.locals import *
 import os
 
 def main():
-    # ball
-    ball = pygame.image.load("assets/ball.png")
-    ball_x = 640
-    ball_y = 360
-    sideimpulse = True
-
-    vel1 = 6
-    vel2 = 8
-    vel3 = 10
-
-    ball_dx = -vel1
-    ball_dy = -vel1
-
-     # ball movement
-    ball_x = ball_x + ball_dx
-    ball_y = ball_y + ball_dy
-
-    # ball collision with upper wall
-    if ball_y <= 40:
-        ball_dy *= -1
-
-    # ball collision with left wall
-    if ball_x <= 0:
-        ball_dx *= -1
-    
-    # ball collision with right wall
-    if ball_x >= 720:
-        ball_dx *= -1
 
     snake_speed = 8
 
@@ -59,8 +31,20 @@ def main():
     # FPS (frames per second) controller
     fps = pygame.time.Clock()
 
-    # defining snake default position
-    snake_position = [100, 50]
+    # ball
+    ball = pygame.image.load("assets/ball/ball.png")
+    ball_x = 640
+    ball_y = 360
+    ball_dx = 8
+    ball_dy = 8
+    ballcolor = red
+    ball = pygame.Rect(ball_x, ball_y, 20, 20)
+
+    vel1 = 6
+    vel2 = 8
+    vel3 = 10
+
+    
 
     # defining first 4 blocks of snake body
     snake_body = [[100, 50],
@@ -69,8 +53,8 @@ def main():
                 [70, 50]
                 ]
     # fruit position
-    fruit_position = [random.randrange(1, (window_x // 20)) * 10,
-                    random.randrange(1, (window_y // 20)) * 10]
+    fruit_position = [random.randrange(1, (window_x // 10)) * 10,
+                    random.randrange(1, (window_y // 10)) * 10]
 
     fruit_spawn = True
 
@@ -139,6 +123,33 @@ def main():
     fruit = random.choice(fruitlist)
 
     while run_game:
+        
+        ball_dx = -vel1
+        ball_dy = -vel1
+
+        # ball movement
+        ball_x += ball_dx
+        ball_y += ball_dy
+
+        # ball collision with upper wall
+        if ball_y <= 40:
+            ball_dy *= -1
+
+        # ball collision with left wall
+        if ball_x <= 0:
+            ball_dx *= -1
+        
+        # ball collision with right wall
+        if ball_x >= 720:
+            ball_dx *= -1
+        # ball collision with floor
+        if ball_y >= 480:
+            ball_dy *= -1 
+
+        # defining snake default position
+        snake_position = [100, 50]
+
+        pygame.draw.rect(game_window, white, ball)
 
         game_window.blit(background, (0, 0))
         # handling key events
@@ -220,6 +231,10 @@ def main():
         # Touching the snake body
         for block in snake_body[1:]:
             if snake_position[0] == block[0] and snake_position[1] == block[1]:
+                game_over()
+
+        # Touching the ball
+        if ball > snake_body:
                 game_over()
 
         # displaying score continuously
