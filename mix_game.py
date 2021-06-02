@@ -33,12 +33,14 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
 screen_game = pygame.Surface((WIDTH, HEIGHT), 0, 32)
 pygame.display.set_caption('MIX')
 botao_enter = False
-BG = pygame.transform.scale(pygame.image.load(os.path.join('assets/Background/background-black.png')), (WIDTH, HEIGHT))
+BG = pygame.transform.scale(pygame.image.load(os.path.join(
+'assets/Background/background-black.png')), (WIDTH, HEIGHT))
 
-# Ball
+# main
 def mixgame(screen):
 
-    BG = pygame.transform.scale(pygame.image.load(os.path.join('assets/Background/background-black.png')), (WIDTH, HEIGHT))
+    BG = pygame.transform.scale(pygame.image.load(os.path.join(
+        'assets/Background/background-black.png')), (WIDTH, HEIGHT))
 
     ball = [(400, 500)]
     ballpos = pygame.Surface((10, 10))
@@ -61,39 +63,39 @@ def mixgame(screen):
     snake_skin.fill((34, 139, 34)) 
 
     apple_pos = on_grid_random()
-    apple = pygame.Surface((10,10))
+    apple = pygame.Surface((10, 10))
     apple.fill((255, 0, 0))
 
     grape_pos = on_grid_random()
-    grape = pygame.Surface((10,10))
+    grape = pygame.Surface((10, 10))
     grape.fill((128, 0, 128))
 
     banana_pos = on_grid_random()
-    banana = pygame.Surface((10,10))
+    banana = pygame.Surface((10, 10))
     banana.fill((255, 255, 0))
 
     cherry_pos = on_grid_random()
-    cherry = pygame.Surface((10,10))
+    cherry = pygame.Surface((10, 10))
     cherry.fill((139, 0, 0))
 
     orange_pos = on_grid_random()
-    orange = pygame.Surface((10,10))
+    orange = pygame.Surface((10, 10))
     orange.fill((255, 215, 0))
 
     mine_pos = on_grid_random()
-    mine = pygame.Surface((10,10))
+    mine = pygame.Surface((10, 10))
     mine.fill((192, 192, 192))
 
     mine1_pos = on_grid_random()
-    mine1 = pygame.Surface((10,10))
+    mine1 = pygame.Surface((10, 10))
     mine1.fill((192, 192, 192))
 
     mine2_pos = on_grid_random()
-    mine2 = pygame.Surface((10,10))
+    mine2 = pygame.Surface((10, 10))
     mine2.fill((192, 192, 192))
 
     mine3_pos = on_grid_random()
-    mine3 = pygame.Surface((10,10))
+    mine3 = pygame.Surface((10, 10))
     mine3.fill((192, 192, 192))
 
     my_direction = LEFT
@@ -173,7 +175,8 @@ def mixgame(screen):
 
             
         # Check if snake collided with boundaries
-        if snake[0][0] == 600 or snake[0][1] == 600 or snake[0][0] < 0 or snake[0][1] < 0:
+        if (snake[0][0] == 600 or snake[0][1] == 600 
+        or snake[0][0] < 0 or snake[0][1] < 0):
             game_over = True
             break
         
@@ -199,6 +202,7 @@ def mixgame(screen):
         if my_direction == LEFT:
             snake[0] = (snake[0][0] - 10, snake[0][1])
         
+        # Draw fruits and mines
 
         screen.fill((0,0,0))
         screen.blit(apple, apple_pos)
@@ -220,7 +224,9 @@ def mixgame(screen):
         level_rect = level_font.get_rect()
         level_rect.topright = (120, 10)
         screen.blit(level_font, level_rect)
-        
+
+        #update of ball and levels
+
         for pos in snake:
             screen.blit(snake_skin, pos)
         for pos in ball:
@@ -293,12 +299,14 @@ def mixgame(screen):
     while True:
         
         game_over_font = pygame.font.Font('freesansbold.ttf', 75)
-        game_over_screen = game_over_font.render('Game Over', True, (255, 255, 255))
+        game_over_screen = game_over_font.render(
+        'Game Over', True, (255, 255, 255))
         game_over_rect = game_over_screen.get_rect()
         game_over_rect.midtop = (600 / 2, 200)
 
         restart_font = pygame.font.Font('freesansbold.ttf', 20)
-        restart_screen = restart_font.render('Press "SPACE" to restart', True, (255, 255, 255))
+        restart_screen = restart_font.render(
+        'Press "SPACE" to restart', True, (255, 255, 255))
         restart_rect = restart_screen.get_rect()
         restart_rect.midtop = (600 / 2, 500)
 
@@ -317,8 +325,6 @@ def mixgame(screen):
 def eventos():
 
     global menu_selecao, botao_enter
-    
-    BG = pygame.transform.scale(pygame.image.load(os.path.join('assets/Background/background-black.png')), (WIDTH, HEIGHT))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -334,6 +340,7 @@ def eventos():
                 menu_selecao += 10
 
 def selecao():
+
 
     global menu_selecao, botao_enter
 
@@ -407,8 +414,10 @@ def selecao():
         screen_game.blit(BG, (0, 0))
 
         fonte = pygame.font.SysFont("arial", 20, False, False)
-        fonte_render = fonte.render("----Luã Maury Maquiné da Silva----", True, (100, 245, 250))
-        fonte_render2 = fonte.render("---https://github.com/luamaquine---", True, (247, 142, 67))
+        fonte_render = fonte.render(
+        "----Luã Maury Maquiné da Silva----", True, (100, 245, 250))
+        fonte_render2 = fonte.render(
+        "---https://github.com/luamaquine---", True, (247, 142, 67))
         voltar_render = fonte.render(">> Voltar <<", True, (255, 255, 255))
         screen_game.blit(fonte_render, ((WIDTH / 2) - 130, (HEIGHT / 2)))
         screen_game.blit(fonte_render2, ((WIDTH / 2) - 130, (HEIGHT / 2) + 20))
