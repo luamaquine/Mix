@@ -40,7 +40,7 @@ def selecao():
 
     if menu_selecao == 1:
 
-        screen_game.fill((0, 0, 0))
+        screen_game.blit(BG, (0, 0))
 
         fonte = pygame.font.SysFont ("arial", 20, False, False)
         start_game = fonte.render(">> Start <<", True, (255, 255, 255))
@@ -57,7 +57,7 @@ def selecao():
 
     if menu_selecao == 2:
 
-        screen_game.fill((0, 0, 0))
+        screen_game.blit(BG, (0, 0))
 
         fonte = pygame.font.SysFont("arial", 20, False, False)
         start_game = fonte.render("     Start     ", True, (255, 255, 255))
@@ -73,7 +73,7 @@ def selecao():
 
     if menu_selecao == 3:
 
-        screen_game.fill([0, 0, 0])
+        screen_game.blit(BG, (0, 0))
 
         fonte = pygame.font.SysFont("arial", 20, False, False)
         start_game = fonte.render("     Start     ", True, (255, 255, 255))
@@ -98,7 +98,7 @@ def selecao():
 
     if menu_selecao == 200:
 
-        screen_game.fill([0, 0, 0])
+        screen_game.blit(BG, (0, 0))
 
         fonte = pygame.font.SysFont("arial", 20, False, False)
         fonte_render = fonte.render("----Luã Maury Maquiné da Silva----", True, (100, 245, 250))
