@@ -25,7 +25,9 @@ HEIGHT = 600
 FPS = 30
 
 os.environ["SDL_VIDEO_CENTERED"] = "1"
+
 pygame.init()
+
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
 screen_game = pygame.Surface((WIDTH, HEIGHT), 0, 32)
@@ -33,8 +35,12 @@ pygame.display.set_caption('MIX')
 botao_enter = False
 BG = pygame.transform.scale(pygame.image.load(os.path.join('assets/Background/background-black.png')), (WIDTH, HEIGHT))
 
+
 # Ball
 def mixgame(screen):
+
+    BG = pygame.transform.scale(pygame.image.load(os.path.join('assets/Background/background-black.png')), (WIDTH, HEIGHT))
+
     ball = [(400, 500)]
     ballpos = pygame.Surface((10, 10))
     ballpos.fill((255, 255, 255))
@@ -43,7 +49,7 @@ def mixgame(screen):
     ballpos2 = pygame.Surface((10, 10))
     ballpos2.fill((255, 255, 255))
 
-    ball3 = [(300, 100)]
+    ball3 = [(150, 500)]
     ballpos3 = pygame.Surface((10, 10))
     ballpos3.fill((255, 255, 255))
 
@@ -103,6 +109,7 @@ def mixgame(screen):
 
     game_over = False
     while not game_over:
+
         clock.tick(10)
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -247,7 +254,7 @@ def mixgame(screen):
             ball2[0] = (ball2[0][1] - 10, ball2[0][0] - 10) 
 
         # Ball 3
-        ball3[0] = (ball3[0][1] + 10, ball3[0][0] - 10)
+        ball3[0] = (ball3[0][0] - 10, ball3[0][1] + 10)
 
         # Ball 3 collision with walls
         if ball3[0][0] == 590:
@@ -302,6 +309,8 @@ def eventos():
 
     global menu_selecao, botao_enter
     
+    BG = pygame.transform.scale(pygame.image.load(os.path.join('assets/Background/background-black.png')), (WIDTH, HEIGHT))
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -318,6 +327,7 @@ def eventos():
 def selecao():
 
     global menu_selecao, botao_enter
+
 
     if menu_selecao == 1:
 
@@ -415,6 +425,7 @@ while True:
     clock.tick(FPS)
     eventos()
     screen.blit(screen_game, (0, 0))
+    
 
     pygame.display.update()
     pygame.display.flip()
