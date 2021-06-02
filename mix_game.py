@@ -35,7 +35,6 @@ pygame.display.set_caption('MIX')
 botao_enter = False
 BG = pygame.transform.scale(pygame.image.load(os.path.join('assets/Background/background-black.png')), (WIDTH, HEIGHT))
 
-
 # Ball
 def mixgame(screen):
 
@@ -297,7 +296,14 @@ def mixgame(screen):
         game_over_screen = game_over_font.render('Game Over', True, (255, 255, 255))
         game_over_rect = game_over_screen.get_rect()
         game_over_rect.midtop = (600 / 2, 200)
+
+        restart_font = pygame.font.Font('freesansbold.ttf', 20)
+        restart_screen = restart_font.render('Press "SPACE" to restart', True, (255, 255, 255))
+        restart_rect = restart_screen.get_rect()
+        restart_rect.midtop = (600 / 2, 500)
+
         screen.blit(game_over_screen, game_over_rect)
+        screen.blit(restart_screen, restart_rect)
         pygame.display.update()
         pygame.time.wait(500)
         while True:
@@ -305,6 +311,9 @@ def mixgame(screen):
                 if event.type == QUIT:
                     pygame.quit()
                     exit()
+            for event in pygame.event.get():
+                if event.key == K_SPACE:
+                    selecao()
 def eventos():
 
     global menu_selecao, botao_enter
