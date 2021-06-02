@@ -22,8 +22,8 @@ LEFT = 3
 pygame.init()
 
 while Mix.start_menu:
-    menu.start_menu()
-    
+    Mix.start_menu()
+
 screen = pygame.display.set_mode((600, 600))
 pygame.display.set_caption('MIX')
 
