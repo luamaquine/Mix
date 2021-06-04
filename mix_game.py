@@ -358,8 +358,12 @@ def selecao():
         screen_game.blit(credits_game, ((WIDTH / 2) - 50, (HEIGHT / 2)+22))
 
         fonte = pygame.font.SysFont("arial", 20, False, False)
+        htp_game = fonte.render(" How to play ", True, (255, 255, 255))
+        screen_game.blit(htp_game, ((WIDTH / 2) - 60, (HEIGHT / 2)+44))
+
+        fonte = pygame.font.SysFont("arial", 20, False, False)
         exit_game = fonte.render("    Exit    ", True, (255, 255, 255))
-        screen_game.blit(exit_game, ((WIDTH / 2) - 50, (HEIGHT / 2)+44))
+        screen_game.blit(exit_game, ((WIDTH / 2) - 50, (HEIGHT / 2)+66))
 
 
     if menu_selecao == 2:
@@ -375,8 +379,12 @@ def selecao():
         screen_game.blit(credits_game, ((WIDTH / 2) - 60, (HEIGHT / 2) + 22))
 
         fonte = pygame.font.SysFont("arial", 20, False, False)
+        htp_game = fonte.render(" How to play ", True, (255, 255, 255))
+        screen_game.blit(htp_game, ((WIDTH / 2) - 60, (HEIGHT / 2)+44))
+
+        fonte = pygame.font.SysFont("arial", 20, False, False)
         exit_game = fonte.render("    Exit    ", True, (255, 255, 255))
-        screen_game.blit(exit_game, ((WIDTH / 2) - 50, (HEIGHT / 2) + 44))
+        screen_game.blit(exit_game, ((WIDTH / 2) - 50, (HEIGHT / 2) + 66))
 
     if menu_selecao == 3:
 
@@ -391,11 +399,35 @@ def selecao():
         screen_game.blit(credits_game, ((WIDTH / 2) - 50, (HEIGHT / 2)+22))
 
         fonte = pygame.font.SysFont("arial", 20, False, False)
-        exit_game = fonte.render(">>Exit<<", True, (255, 255, 255))
-        screen_game.blit(exit_game, ((WIDTH / 2) - 50, (HEIGHT / 2)+44))
+        htp_game = fonte.render(">>How to play<<", True, (255, 255, 255))
+        screen_game.blit(htp_game, ((WIDTH / 2) - 75, (HEIGHT / 2)+44))
+
+        fonte = pygame.font.SysFont("arial", 20, False, False)
+        exit_game = fonte.render("    Exit    ", True, (255, 255, 255))
+        screen_game.blit(exit_game, ((WIDTH / 2) - 50, (HEIGHT / 2)+66))
 
     if menu_selecao == 4:
-        menu_selecao = 3
+
+        screen_game.blit(BG, (0, 0))
+
+        fonte = pygame.font.SysFont("arial", 20, False, False)
+        start_game = fonte.render("     Start     ", True, (255, 255, 255))
+        screen_game.blit(start_game, ((WIDTH/2)-60, (HEIGHT/2)))
+
+        fonte = pygame.font.SysFont("arial", 20, False, False)
+        credits_game = fonte.render("  Credits  ", True, (255, 255, 255))
+        screen_game.blit(credits_game, ((WIDTH / 2) - 50, (HEIGHT / 2)+22))
+
+        fonte = pygame.font.SysFont("arial", 20, False, False)
+        htp_game = fonte.render(" How to play ", True, (255, 255, 255))
+        screen_game.blit(htp_game, ((WIDTH / 2) - 60, (HEIGHT / 2)+44))
+
+        fonte = pygame.font.SysFont("arial", 20, False, False)
+        exit_game = fonte.render(">>Exit<<", True, (255, 255, 255))
+        screen_game.blit(exit_game, ((WIDTH / 2) - 50, (HEIGHT / 2)+66))
+
+    if menu_selecao == 5:
+        menu_selecao = 4
 
     if menu_selecao == 0:
         menu_selecao = 1
@@ -421,7 +453,7 @@ def selecao():
         voltar_render = fonte.render(">> Voltar <<", True, (255, 255, 255))
         screen_game.blit(fonte_render, ((WIDTH / 2) - 130, (HEIGHT / 2)))
         screen_game.blit(fonte_render2, ((WIDTH / 2) - 130, (HEIGHT / 2) + 20))
-        screen_game.blit(voltar_render, ((WIDTH / 2) - 45, (HEIGHT / 2) + 300))
+        screen_game.blit(voltar_render, ((WIDTH / 2) - 45, (HEIGHT / 2) + 200))
 
     if menu_selecao == 201:
         menu_selecao = 200
@@ -431,7 +463,40 @@ def selecao():
     if menu_selecao == 210:
         menu_selecao = 2
 
+        # Menu How to play
+
+    if menu_selecao == 21:
+        menu_selecao = 1
+
     if menu_selecao == 13:
+        menu_selecao = 300
+
+    if menu_selecao == 300:
+
+        screen_game.blit(BG, (0, 0))
+
+        fonte = pygame.font.SysFont("arial", 20, False, False)
+        fonte_rende = fonte.render(
+        " Use 'arrows' for movimentation ", True, (173,255,47))
+        fonte_rende2 = fonte.render(
+        "'Enter button' to choose ", True, (255, 255, 255))
+        fonte_rende3 = fonte.render(
+        "'Space' to restart game ", True, ((216,191,216)))
+        voltar_render = fonte.render(">> Voltar <<", True, (255, 255, 255))
+        screen_game.blit(fonte_rende, ((WIDTH / 2) - 135, (HEIGHT / 2)))
+        screen_game.blit(fonte_rende2, ((WIDTH / 2) - 130, (HEIGHT / 2) + 30))
+        screen_game.blit(fonte_rende3, ((WIDTH / 2) - 130, (HEIGHT / 2) + 60))
+        screen_game.blit(voltar_render, ((WIDTH / 2) - 45, (HEIGHT / 2) + 200))
+
+    if menu_selecao == 301:
+        menu_selecao = 300
+    if menu_selecao == 299:
+        menu_selecao = 300
+
+    if menu_selecao == 310:
+        menu_selecao = 3
+
+    if menu_selecao == 14:
         menu_selecao = 500
 
     if menu_selecao == 500:
